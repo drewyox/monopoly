@@ -5,12 +5,17 @@ import { PropertyService } from '../property.service';
 import { Property } from '../properties.model';
 import { FirebaseListObservable } from 'angularfire2/database';
 import { DatabaseService } from '../database.service';
+import { CommunityCard } from '../community-cards.model'
+import { CommunityCardsService } from '../community-cards.service';
+import { ChanceCard } from '../chance-cards.model'
+import { ChanceCardsService } from '../chance-cards.service';
+
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
-  styleUrls: ['./player.component.css'],
-  providers: [DiceService, PropertyService, DatabaseService]
+  styleUrls: ['./player.component.scss'],
+  providers: [DiceService, PropertyService, DatabaseService, CommunityCardsService, ChanceCardsService]
 })
 export class PlayerComponent implements OnInit {
   prop: Property[];
@@ -27,11 +32,26 @@ export class PlayerComponent implements OnInit {
   doubleCount: number = 0;
   playerMove: number;
 
-  constructor(private diceService: DiceService, private propertyService: PropertyService, private databaseService: DatabaseService) {
+
+
+  communityCards: CommunityCard[];
+  playedCommunityCards = [];
+
+
+  chanceCards: ChanceCard[];
+  playedChanceCards = [];
+
+  randomChanceCard;
+
+  randomCommunityCard;
+
+  constructor(private diceService: DiceService, private propertyService: PropertyService, private databaseService: DatabaseService, private communityCardsService: CommunityCardsService, private chanceCardsService: ChanceCardsService) {
   }
 
 
   ngOnInit() {
+    this.communityCards = this.communityCardsService.getCommunityCards();
+    this.chanceCards = this.chanceCardsService.getChanceCards();
     this.databaseService.getPlayers().subscribe(dataLastEmittedFromObserver => {
       return this.players = dataLastEmittedFromObserver;
     })
@@ -40,6 +60,8 @@ export class PlayerComponent implements OnInit {
   }
 
   endTurn() {
+    this.randomChanceCard = null;
+    this.randomCommunityCard = null;
     const hide = document.getElementById("hideRoll");
     hide.classList.remove("hideRolll") ;
     this.ifActive = false;
@@ -55,6 +77,8 @@ export class PlayerComponent implements OnInit {
       this.setValues(this.players[this.position]);
       this.newInfo();
     }
+
+
   }
 
   newInfo() {
@@ -79,6 +103,8 @@ export class PlayerComponent implements OnInit {
     this.taxes();
     this.doubleCheck();
     this.movement();
+    this.communityCardGenerator();
+    this.chanceCardGenerator();
   }
 
 
@@ -88,7 +114,13 @@ export class PlayerComponent implements OnInit {
     const hide = document.getElementById("hideRoll");
     if (doubleOcc === true) {
       this.doubleCount++;
-    } else {
+      if(this.doubleCount === 3){
+        this.location = 40;
+        this.doubleCount = 0;
+        this.roll1 -= 1;
+      }
+    }
+    else {
       this.doubleCount = 0;
       hide.classList.add("hideRolll") ;
     }
@@ -97,6 +129,7 @@ export class PlayerComponent implements OnInit {
 
   movePlayer() {
     this.taxes();
+
     if (this.location===40){
       if (this.roll1===this.roll2) {
         this.location=10;
@@ -113,6 +146,7 @@ export class PlayerComponent implements OnInit {
         this.location=40;
       }
     }
+    console.log(this.location);
   }
 
   taxes() {
@@ -125,36 +159,36 @@ export class PlayerComponent implements OnInit {
 
 
   buyingProperty() {
-    if(this.location===2 || this.location===4 || this.location===7 || this.location===10 || this.location===17 || this.location===20 || this.location===22 || this.location===33 || this.location===36 || this.location===38 || this.location===40){
+    if(this.location===4 || this.location===10 || this.location===20 || this.location===22 || this.location===38 || this.location===40 || this.location===7 || this.location===12 || this.location===36 || this.location===2 || this.location===17 || this.location===33){
 
       alert("cant buy fool")
     } else if (this.prop[this.location].owner!==null){
 
-        if(this.prop[this.location].owner === this.players[this.position].name) {
-          alert("you own this")
-        } else {
-          const player1Money = this.money;
-          if (this.prop[this.location].owner === this.players[0].name){
-            this.players[0].money += this.prop[this.location].rent;
-            this.players[1].money -= this.prop[this.location].rent;
-            this.newInfo();
-          } else if (this.prop[this.location].owner === this.players[1].name){
-            this.players[1].money += this.prop[this.location].rent;
-            this.players[0].money -= this.prop[this.location].rent;
-            this.newInfo();
-          }
-          alert("pay rent");
+      if(this.prop[this.location].owner === this.players[this.position].name) {
+        alert("you own this")
+      } else {
+        const player1Money = this.money;
+        if (this.prop[this.location].owner === this.players[0].name){
+          this.players[0].money += this.prop[this.location].rent;
+          this.players[1].money -= this.prop[this.location].rent;
+          this.newInfo();
+        } else if (this.prop[this.location].owner === this.players[1].name){
+          this.players[1].money += this.prop[this.location].rent;
+          this.players[0].money -= this.prop[this.location].rent;
+          this.newInfo();
         }
-      } else if (this.money<this.prop[this.location].price){
-        alert("not enough funds");
-      } else if (this.prop[this.location].owner == null && this.money>=this.prop[this.location].price){
-        if (confirm("Are you sure you want to buy this?")){
-          this.prop[this.location].owner = this.name;
-          this.money -= this.prop[this.location].price;
-          return this.money;
-        }
+        alert("pay rent");
+      }
+    } else if (this.money<this.prop[this.location].price){
+      alert("not enough funds");
+    } else if (this.prop[this.location].owner == null && this.money>=this.prop[this.location].price){
+      if (confirm("Are you sure you want to buy this?")){
+        this.prop[this.location].owner = this.name;
+        this.money -= this.prop[this.location].price;
+        return this.money;
       }
     }
+  }
 
 
   movement() {
@@ -171,5 +205,38 @@ export class PlayerComponent implements OnInit {
     const numToString = "b" + currentLocation.toString();
 
     car.classList.remove(`${numToString}`);
+  }
+
+  communityCardGenerator() {
+    let card = Math.floor(Math.random() * this.communityCards.length);
+
+    if (this.location===2 || this.location===17 || this.location===33){
+      this.randomCommunityCard = this.communityCards[card].description;
+
+      this.playedCommunityCards.push(this.communityCards[card]);
+
+      if(this.communityCards.length <= 1) {
+        this.communityCards = this.playedCommunityCards;
+        this.playedCommunityCards = [];
+      } else {
+        this.communityCards.splice(card, 1);
+      }
+    }
+  }
+
+  chanceCardGenerator() {
+    let card = Math.floor(Math.random() * this.chanceCards.length);
+
+    if (this.location===7 || this.location===12 || this.location===36){
+      this.randomChanceCard = this.chanceCards[card].description;
+      this.playedChanceCards.push(this.chanceCards[card]);
+
+      if (this.chanceCards.length <= 1) {
+        this.chanceCards = this.playedChanceCards;
+        this.playedChanceCards = [];
+      } else {
+        this.chanceCards.splice(card, 1);
+      }
+    }
   }
 }

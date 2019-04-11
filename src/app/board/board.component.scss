@@ -2,58 +2,54 @@
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
-  border: 1px solid orange;
 }
-
 .board {
   display: grid;
   grid: 10vw 6vw 6vw 6vw 6vw 6vw 6vw 6vw 6vw 6vw 10vw/ 10vw 6vw 6vw 6vw 6vw 6vw 6vw 6vw 6vw 6vw 10vw;
-  max-width: 90%;
-
+  max-width: 80vw;
 }
-
-#car {
-  width: 5vw;
+#shoe {
+  width: 3.5vw;
   align-self: center;
   justify-self: center;
 }
-
 #hat{
   width: 3vw;
   align-self: center;
   justify-self: center;
 }
-
+.playerInformation {
+  background-image:url("../../assets/img/moneyImg.jpg");
+  // margin: 10px;
+  width: 20vw;
+  border: 3px solid black;
+}
+//Don't mess with anything below this comment
+//Creates board and allows pieces to move around the board
 .b0 {
   grid-row: 11;
   grid-column: 11;
 }
-
 .b1 {
   grid-row: 11;
   grid-column: 10;
 }
-
 .b2 {
   grid-row: 11;
   grid-column: 9;
 }
-
 .b3 {
   grid-row: 11;
   grid-column: 8;
 }
-
 .b4 {
   grid-row: 11;
   grid-column: 7;
 }
-
 .b5 {
   grid-row: 11;
   grid-column: 6;
 }
-
 .b6 {
   grid-row: 11;
   grid-column: 5;
@@ -73,6 +69,7 @@
 .b10 {
   grid-row: 11;
   grid-column: 1;
+  transform: translateX(-3vw) translateY(3vw);
 }
 .b11 {
   grid-row: 10;
@@ -224,84 +221,72 @@
   grid-column: 1;
   transform: translateX(3vw) translateY(-3vw);
 }
-
 #go {
   grid-row: 11;
   grid-column: 11;
   width: 100%;
   height: 100%;
 }
-
 #mediterranean {
   grid-row: 11;
   grid-column: 10;
   width: 100%;
   height: 100%;
 }
-
 #community-bottom {
   grid-row: 11;
   grid-column: 9;
   width: 100%;
   height: 100%;
 }
-
 #baltic {
   grid-row: 11;
   grid-column: 8;
   width: 100%;
   height: 100%;
 }
-
 #income {
   grid-row: 11;
   grid-column: 7;
   width: 100%;
   height: 100%;
 }
-
 #readingRR {
   grid-row: 11;
   grid-column: 6;
   width: 100%;
   height: 100%;
 }
-
 #oriental {
   grid-row: 11;
   grid-column: 5;
   width: 100%;
   height: 100%;
 }
-
 #chance-bottom {
   grid-row: 11;
   grid-column: 4;
   width: 100%;
   height: 100%;
 }
-
 #vermont {
   grid-row: 11;
   grid-column: 3;
   width: 100%;
   height: 100%;
 }
-
 #connecticut {
   grid-row: 11;
   grid-column: 2;
   width: 100%;
   height: 100%;
 }
-
 #jail {
   grid-row: 11;
   grid-column: 1;
   width: 100%;
   height: 100%;
 }
-
 #st-charles {
   grid-row: 10;
   grid-column: 1;
@@ -311,7 +296,6 @@
   width: 168%;
   height: 168%;
 }
-
 #electric {
   grid-row: 9;
   grid-column: 1;
@@ -321,7 +305,6 @@
   width: 168%;
   height: 168%;
 }
-
 #states {
   grid-row: 8;
   grid-column: 1;
@@ -331,7 +314,6 @@
   width: 168%;
   height: 168%;
 }
-
 #virginia {
   grid-row: 7;
   grid-column: 1;
@@ -341,7 +323,6 @@
   width: 168%;
   height: 168%;
 }
-
 #pennsylvaniaRR {
   grid-row: 6;
   grid-column: 1;
@@ -351,7 +332,6 @@
   width: 168%;
   height: 168%;
 }
-
 #st-james {
   grid-row: 5;
   grid-column: 1;
@@ -361,7 +341,6 @@
   width: 168%;
   height: 168%;
 }
-
 #communityLeft {
   grid-row: 4;
   grid-column: 1;
@@ -371,7 +350,6 @@
   width: 168%;
   height: 168%;
 }
-
 #tennessee {
   grid-row: 3;
   grid-column: 1;
@@ -381,7 +359,6 @@
   width: 168%;
   height: 168%;
 }
-
 #newYork {
   grid-row: 2;
   grid-column: 1;
@@ -391,14 +368,12 @@
   width: 168%;
   height: 168%;
 }
-
 #freeParking {
   grid-row: 1;
   grid-column: 1;
   width: 100%;
   height: 100%;
 }
-
 #kentucky {
   grid-row: 1;
   grid-column: 2;
@@ -406,7 +381,6 @@
   width: 100%;
   height: 100%;
 }
-
 #chanceTop {
   grid-row: 1;
   grid-column: 3;
@@ -414,7 +388,6 @@
   width: 100%;
   height: 100%;
 }
-
 #indiana {
   grid-row: 1;
   grid-column: 4;
@@ -422,7 +395,6 @@
   width: 100%;
   height: 100%;
 }
-
 #illinois {
   grid-row: 1;
   grid-column: 5;
@@ -430,7 +402,6 @@
   width: 100%;
   height: 100%;
 }
-
 #boRR {
   grid-row: 1;
   grid-column: 6;
@@ -438,7 +409,6 @@
   width: 100%;
   height: 100%;
 }
-
 #atlantic {
   grid-row: 1;
   grid-column: 7;
@@ -446,7 +416,6 @@
   width: 100%;
   height: 100%;
 }
-
 #ventnor {
   grid-row: 1;
   grid-column: 8;
@@ -454,7 +423,6 @@
   width: 100%;
   height: 100%;
 }
-
 #water {
   grid-row: 1;
   grid-column: 9;
@@ -462,7 +430,6 @@
   width: 100%;
   height: 100%;
 }
-
 #marvin {
   grid-row: 1;
   grid-column: 10;
@@ -470,14 +437,12 @@
   width: 100%;
   height: 100%;
 }
-
 #goToJail {
   grid-row: 1;
   grid-column: 11;
   width: 100%;
   height: 100%;
 }
-
 #pacific {
   grid-row: 2;
   grid-column: 11;
@@ -487,7 +452,6 @@
   width: 168%;
   height: 168%;
 }
-
 #nCarolina {
   grid-row: 3;
   grid-column: 11;
@@ -497,7 +461,6 @@
   width: 168%;
   height: 168%;
 }
-
 #communityRight {
   grid-row: 4;
   grid-column: 11;
@@ -507,7 +470,6 @@
   width: 168%;
   height: 168%;
 }
-
 #pennsylvania {
   grid-row: 5;
   grid-column: 11;
@@ -517,7 +479,6 @@
   width: 168%;
   height: 168%;
 }
-
 #shortRR {
   grid-row: 6;
   grid-column: 11;
@@ -527,7 +488,6 @@
   width: 168%;
   height: 168%;
 }
-
 #chanceRight {
   grid-row: 7;
   grid-column: 11;
@@ -537,7 +497,6 @@
   width: 168%;
   height: 168%;
 }
-
 #park {
   grid-row: 8;
   grid-column: 11;
@@ -547,7 +506,6 @@
   width: 168%;
   height: 168%;
 }
-
 #luxury {
   grid-row: 9;
   grid-column: 11;
@@ -557,7 +515,6 @@
   width: 168%;
   height: 168%;
 }
-
 #boardwalk {
   grid-row: 10;
   grid-column: 11;
@@ -567,7 +524,6 @@
   width: 168%;
   height: 168%;
 }
-
 #board {
   grid-row: 2/ span 9;
   grid-column: 2 / span 9;
@@ -577,7 +533,6 @@
     padding: 2px;
   }
 }
-
 #communitycards {
   grid-row: 4/ span 2;
   grid-column: 3/ span 3;
@@ -587,13 +542,4 @@
   grid-row: 7/ span 2;
   grid-column: 7/ span 3;
   transform: rotate(-45deg);
-}
-.img {
-  position: relative;
-}
-.playerInformation {
-  background-image:url("../../assets/img/moneyImg.jpg");
-  margin: 10px;
-  width: 23%;
-  border: 3px solid black;
 }

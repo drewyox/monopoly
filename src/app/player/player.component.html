@@ -1,5 +1,4 @@
-
-<div>
+<div class="displayClass">
   <div *ngFor="let player of players" class="playerDisplay">
     <div class="moneyDisplayer">
       <h2>{{player.name}}</h2>
@@ -22,4 +21,21 @@
     </div>
   </div>
 
+  <div class="playcards">
+    <div id="communityContainer">
+      <div id="communityCardContent">
+        <h2>Community Chest</h2>
+        <p>{{randomCommunityCard}}</p>
+      </div>
+      <img src="./../assets/images/monopoly-community.jpg" alt="monopoly community chest">
+    </div>
+
+    <div id="chanceContainer">
+      <img src="./../assets/images/monopoly-chance.gif" alt="monopoly chance chest">
+      <div id="chanceCardContent">
+        <h2>Chance Card</h2>
+        <p>{{randomChanceCard}}</p>
+      </div>
+    </div>
+  </div>
 </div>
